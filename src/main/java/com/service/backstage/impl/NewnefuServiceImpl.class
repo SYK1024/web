@@ -1,0 +1,147 @@
+package com.service.backstage.impl;
+
+import com.entity.Newnefu;
+import com.service.backstage.NewnefuService;
+import com.util.DataSourceUtils;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class NewnefuServiceImpl implements NewnefuService {
+    //    查询全部新闻
+    @Override
+    public List<Newnefu> newnefus() {
+        List<Newnefu> newnefus=new ArrayList<>();
+        String sql="select * from newnefu";
+        try(Connection connection= DataSourceUtils.getConnection();
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            ResultSet resultSet=preparedStatement.executeQuery()) {
+            while (resultSet.next()){
+                Newnefu newnefu=new Newnefu(resultSet.getInt("id"),resultSet.getString("tittle"),
+                        resultSet.getString("content"),resultSet.getString("provider"),
+                        resultSet.getTimestamp("create_time"),resultSet.getString("img"),
+                        resultSet.getTimestamp("update_time"));
+                newnefus.add(newnefu);
+            }
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return newnefus;
+    }
+    //查询最新的五个
+    @Override
+    public List<Newnefu> newnefusneed() {
+        List<Newnefu> newnefus=new ArrayList<>();
+        List<Newnefu> newnefuneed=new ArrayList<>();
+        int max=5;int i;
+        String sql="select * from newnefu";
+        try(Connection connection= DataSourceUtils.getConnection();
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            ResultSet resultSet=preparedStatement.executeQuery()) {
+            while (resultSet.next()){
+                Newnefu newnefu=new Newnefu(resultSet.getInt("id"),resultSet.getString("tittle"),
+                        resultSet.getString("content"),resultSet.getString("provider"),
+                        resultSet.getTimestamp("create_time"));
+                newnefus.add(newnefu);
+            }
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        int sz = newnefus.size()-1;
+        for(i=sz;i>sz-max;i--) {
+            newnefuneed.add(newnefus.get(i));
+        }
+        return newnefuneed;
+    }
+    //查找要的那条新闻
+    @Override
+    public Newnefu getnewnefu(int id) {
+        Newnefu newnefu=null;
+        String sql = "select * from newnefu where id=?";
+        try(Connection connection=DataSourceUtils.getConnection();
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+        ) {
+            preparedStatement.setInt(1,id);
+            try(ResultSet resultSet=preparedStatement.executeQuery()) {
+                while (resultSet.next()){
+                    newnefu=new Newnefu(resultSet.getInt("id"),resultSet.getString("tittle"),
+                            resultSet.getString("content"),resultSet.getString("provider"),
+                            resultSet.getTimestamp("create_time"),resultSet.getString("img")
+                    ,resultSet.getTimestamp("update_time"));
+                }
+            }
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return newnefu;
+    }
+    //增加新闻
+    @Override
+    public void addnewnefu(String tittle, String content, String provider, String img) {
+        String sql="insert into newnefu(tittle,content,provider,img) values(?,?,?,?)";
+        try(Connection connection=DataSourceUtils.getConnection();
+        PreparedStatement preparedStatement=connection.prepareStatement(sql)) {
+            preparedStatement.setString(1,tittle);
+            preparedStatement.setString(2,content);
+            preparedStatement.setString(3,provider);
+            preparedStatement.setString(4,img);
+            preparedStatement.executeUpdate();
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+    //修改新闻
+    @Override
+    public void alternewnefu(String tittle, String content, String provider, String img,int id) {
+        String sql="update newnefu set tittle=?,content=?,provider=?,img=? where id=?";
+        try(Connection connection=DataSourceUtils.getConnection();
+            PreparedStatement preparedStatement=connection.prepareStatement(sql)) {
+            preparedStatement.setString(1,tittle);
+            preparedStatement.setString(2,content);
+            preparedStatement.setString(3,provider);
+            preparedStatement.setString(4,img);
+            preparedStatement.setInt(5,id);
+            preparedStatement.executeUpdate();
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+    //删除新闻
+    @Override
+    public void deletenewnefu(int id) {
+        String sql="delete from newnefu where id=?";
+        try(Connection connection=DataSourceUtils.getConnection();
+            PreparedStatement preparedStatement=connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+    //查找
+    @Override
+    public Newnefu newnefusfind(String tittle) {
+        Newnefu newnefu=null;
+        String sql = "select * from newnefu where tittle=?";
+        try(Connection connection=DataSourceUtils.getConnection();
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+        ) {
+            preparedStatement.setString(1,tittle);
+            try(ResultSet resultSet=preparedStatement.executeQuery()) {
+                while (resultSet.next()){
+                    newnefu=new Newnefu(resultSet.getInt("id"),resultSet.getString("tittle"),
+                            resultSet.getString("content"),resultSet.getString("provider"),
+                            resultSet.getTimestamp("create_time"),resultSet.getString("img")
+                            ,resultSet.getTimestamp("update_time"));
+                }
+            }
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return newnefu;
+    }
+}
