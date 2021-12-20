@@ -12,7 +12,7 @@
 <footer>
     <div class="footer">
             <p>东北林业大学<br>
-                软件工程一班 陈泓睿&copy;</p>
+                软件工程一班 chr&copy;</p>
         </div>
     </div>
 </footer>
