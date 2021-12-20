@@ -1,0 +1,114 @@
+package com.entity;
+
+import java.util.Date;
+
+public class Newnefu {
+    private int id;
+    private String tittle;
+    private String content;
+    private String provider;
+    private String img;
+    private Date create_time;
+    private Date update_time;
+
+    public Date getUpdate_time() {
+        return update_time;
+    }
+
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Newnefu(int id, String tittle, String content, String provider, Date create_time, String img, Date update_time) {
+        this.id = id;
+        this.tittle = tittle;
+        this.content = content;
+        this.provider = provider;
+        this.img = img;
+        this.create_time = create_time;
+        this.update_time = update_time;
+    }
+
+    public Newnefu(int id, String tittle, String content, String provider, Date create_time, String img) {
+        this.id = id;
+        this.tittle = tittle;
+        this.content = content;
+        this.provider = provider;
+        this.create_time = create_time;
+        this.img = img;
+    }
+
+    public Newnefu(int id, String tittle, String content, String provider, Date create_time) {
+        this.id = id;
+        this.tittle = tittle;
+        this.content = content;
+        this.provider = provider;
+        this.create_time = create_time;
+    }
+
+    public Newnefu(int id, String tittle, String content, Date create_time) {
+        this.id = id;
+        this.tittle = tittle;
+        this.content = content;
+        this.create_time = create_time;
+    }
+
+    public Newnefu(int id, String tittle, Date create_time) {
+        this.id = id;
+        this.tittle = tittle;
+        this.create_time = create_time;
+    }
+
+    public Newnefu(int id, String tittle) {
+        this.id = id;
+        this.tittle = tittle;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTittle() {
+        return tittle;
+    }
+
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
+    }
+}
