@@ -11,8 +11,8 @@
 </style>
 <footer>
     <div class="footer">
-            <p>东北林业大学<br>
-                软件工程一班 chr&copy;</p>
+            <p>SYK<br>
+                1024&copy;</p>
         </div>
     </div>
 </footer>
